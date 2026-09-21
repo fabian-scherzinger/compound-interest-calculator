@@ -35,15 +35,23 @@ public class CompoundInterestCalculator {
         double totalDeposits = monthlyDeposit * months;
         double totalInvested = initialCapital + totalDeposits;
 
-        // Calculation of the growth of the initial capital and of the monthly deposits
+                // CHANGE: changed it into a for loop to make it possible to see the yearly progress and simpler   -> variable months important
 
-        double finalInitialCapital = initialCapital * Math.pow(1 + monthlyInterestRate, months);
+        double finalCapital = initialCapital;
 
-        double finalDeposits = monthlyDeposit * (Math.pow(1 + monthlyInterestRate, months) - 1) / monthlyInterestRate;
+        for (int month = 1; month <= months; month++) {
+            finalCapital = finalCapital * (1 + monthlyInterestRate);
+            finalCapital = finalCapital + monthlyDeposit;
 
-        // final capital calculation
+            if (month % 12 == 0) {
+                int currentYear = month / 12;
+                System.out.println("Capital after year " + currentYear + ": "
+                + String.format("%.2f ", finalCapital) + currency);
+            }
 
-        double finalCapital = finalInitialCapital + finalDeposits;
+        }
+
+        System.out.println(" ");
 
         // interest earned and profit
 
@@ -70,6 +78,9 @@ public class CompoundInterestCalculator {
         } else {
             System.out.println("Please enter a valid amount of years!");
         }
+
+        scanner.close();
+
     }
 }
 
